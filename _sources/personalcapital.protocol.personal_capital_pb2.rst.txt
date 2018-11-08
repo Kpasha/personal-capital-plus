@@ -1,0 +1,7 @@
+personalcapital.protocol.personal\_capital\_pb2 module
+======================================================
+
+.. automodule:: personalcapital.protocol.personal_capital_pb2
+    :members:
+    :undoc-members:
+    :show-inheritance:

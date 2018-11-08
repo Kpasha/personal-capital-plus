@@ -1,0 +1,7 @@
+personalcapital.connection module
+=================================
+
+.. automodule:: personalcapital.connection
+    :members:
+    :undoc-members:
+    :show-inheritance:

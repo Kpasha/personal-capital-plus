@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>personalcapital.util.find_enums &#8212; personalcapital 0.3 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for personalcapital.util.find_enums</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">personalcapital</span> <span class="k">import</span> <span class="n">APIConnector</span>
+<span class="kn">from</span> <span class="nn">personalcapital.database</span> <span class="k">import</span> <span class="n">Database</span>
+
+<span class="n">DATE_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span>
+<span class="n">DEFAULT_LOOKBACK_DAYS</span> <span class="o">=</span> <span class="mi">7</span>
+
+
+<div class="viewcode-block" id="make_enum_mapping"><a class="viewcode-back" href="../../../personalcapital.util.find_enums.html#personalcapital.util.find_enums.make_enum_mapping">[docs]</a><span class="k">def</span> <span class="nf">make_enum_mapping</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">max_perc_unique</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes a list of string values and creates a dict mapping of str -&gt; int,</span>
+<span class="sd">    emulating the behavior of an Enum.</span>
+<span class="sd">    :param &lt;iterable&gt; values:</span>
+<span class="sd">        values to create a mapping for</span>
+<span class="sd">    :param max_perc_unique:</span>
+<span class="sd">        maximum % of unique values to justify creating a mapping</span>
+<span class="sd">    :return dict:</span>
+<span class="sd">        the create mapping (if justified), otherwise None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check that creating the mapping is justified</span>
+    <span class="n">unique_values</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">n_unique</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_values</span><span class="p">)</span>
+    <span class="n">perc_unique</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_unique</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">perc_unique</span> <span class="o">&gt;=</span> <span class="n">max_perc_unique</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">val</span><span class="p">:</span> <span class="n">i</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_values</span><span class="p">)</span>
+    <span class="p">}</span></div>
+
+<span class="c1"># with open(&quot;etc/transactions.json&quot;) as fp:</span>
+<span class="c1">#     data = json.load(fp)[&#39;data&#39;]</span>
+<span class="c1">#     df = pd.DataFrame(data)</span>
+<span class="c1">#     import pdb; pdb.set_trace()</span>
+<span class="c1">#     print(make_enum_mapping(df[&quot;resultType&quot;]))</span>
+
+
+<div class="viewcode-block" id="get_accounts"><a class="viewcode-back" href="../../../personalcapital.util.find_enums.html#personalcapital.util.find_enums.get_accounts">[docs]</a><span class="k">def</span> <span class="nf">get_accounts</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">accounts_response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;/newaccount/getAccounts&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;accounts_response.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">accounts_response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">accounts</span> <span class="o">=</span> <span class="n">accounts_response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;spData&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Networth: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accounts</span><span class="p">[</span><span class="s1">&#39;networth&#39;</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">accounts</span></div>
+
+
+<div class="viewcode-block" id="fetch_and_dump"><a class="viewcode-back" href="../../../personalcapital.util.find_enums.html#personalcapital.util.find_enums.fetch_and_dump">[docs]</a><span class="k">def</span> <span class="nf">fetch_and_dump</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_transactions"><a class="viewcode-back" href="../../../personalcapital.util.find_enums.html#personalcapital.util.find_enums.get_transactions">[docs]</a><span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">):</span>
+    <span class="n">transactions_response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;/transaction/getUserTransactions&#39;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s1">&#39;sort_cols&#39;</span><span class="p">:</span> <span class="s1">&#39;transactionTime&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sort_rev&#39;</span><span class="p">:</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;page&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rows_per_page&#39;</span><span class="p">:</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;startDate&#39;</span><span class="p">:</span> <span class="n">start_date</span><span class="p">,</span>
+        <span class="s1">&#39;endDate&#39;</span><span class="p">:</span> <span class="n">end_date</span><span class="p">,</span>
+        <span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="s1">&#39;DATAGRID&#39;</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;transactions_response.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">transactions_response</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">transaction_data</span> <span class="o">=</span> <span class="n">transactions_response</span><span class="p">[</span><span class="s1">&#39;spData&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Retrieved </span><span class="si">{}</span><span class="s1"> transactions between </span><span class="si">{}</span><span class="s1"> and </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">transaction_data</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]),</span> <span class="n">transaction_data</span><span class="p">[</span><span class="s1">&#39;startDate&#39;</span><span class="p">],</span> <span class="n">transaction_data</span><span class="p">[</span><span class="s1">&#39;endDate&#39;</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">transaction_data</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="mongoize"><a class="viewcode-back" href="../../../personalcapital.util.find_enums.html#personalcapital.util.find_enums.mongoize">[docs]</a><span class="k">def</span> <span class="nf">mongoize</span><span class="p">(</span><span class="n">transaction</span><span class="p">):</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;userTransactionId&#39;</span><span class="p">]</span>
+    <span class="k">del</span> <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;userTransactionId&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">transaction</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../personalcapital.util.find_enums.html#personalcapital.util.find_enums.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">APIConnector</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">,</span> <span class="n">Database</span><span class="p">()</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="c1"># transactions = get_transactions(session, start_date, end_date)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/account/getHistories&#39;, &#39;histories_response.json&#39;)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/invest/getHoldings&#39;, &#39;holdings_response.json&#39;)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/account/getBillReminders&#39;, &#39;bill_reminders_response.json&#39;)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/message/getUserMessages&#39;, &#39;messages_response.json&#39;)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/newaccount/getAccounts2&#39;, &#39;accounts2_response.json&#39;)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/person/getPerson&#39;, &#39;person_response.json&#39;)</span>
+        <span class="c1"># fetch_and_dump(session, &#39;/transactioncategory/getCategories&#39;, &#39;categories_response.json&#39;)</span>
+
+        <span class="n">start_date</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">DEFAULT_LOOKBACK_DAYS</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">DATE_FORMAT</span><span class="p">)</span>
+        <span class="n">end_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">DATE_FORMAT</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Querying for transactions between </span><span class="si">{}</span><span class="s2"> and </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">))</span>
+        <span class="n">transactions</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span>
+            <span class="n">mongoize</span><span class="p">,</span>
+            <span class="n">get_transactions</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">)</span>
+        <span class="p">))</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;transactions.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">transactions</span><span class="p">},</span> <span class="n">fp</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">transactions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+        <span class="c1"># transactions_db = db[&#39;banking&#39;][&#39;transactions&#39;]</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">personalcapital</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../personalcapital.html">personalcapital</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Anthony Agnone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

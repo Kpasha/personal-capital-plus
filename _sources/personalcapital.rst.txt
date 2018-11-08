@@ -1,0 +1,28 @@
+personalcapital package
+=======================
+
+.. automodule:: personalcapital
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    personalcapital.protocol
+    personalcapital.util
+
+Submodules
+----------
+
+.. toctree::
+
+   personalcapital.connection
+   personalcapital.constants
+   personalcapital.conversion
+   personalcapital.database
+   personalcapital.exceptions
+   personalcapital.version
+

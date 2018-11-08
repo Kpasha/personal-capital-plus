@@ -1,0 +1,18 @@
+personalcapital.protocol package
+================================
+
+.. automodule:: personalcapital.protocol
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   personalcapital.protocol.bill_reminders_pb2
+   personalcapital.protocol.categories_pb2
+   personalcapital.protocol.personal_capital_pb2
+   personalcapital.protocol.transactions_pb2
+

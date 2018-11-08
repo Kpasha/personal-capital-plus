@@ -1,0 +1,7 @@
+personalcapital.version module
+==============================
+
+.. automodule:: personalcapital.version
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,260 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>personalcapital.connection module &#8212; personalcapital 0.3 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-personalcapital.connection">
+<span id="personalcapital-connection-module"></span><h1>personalcapital.connection module<a class="headerlink" href="#module-personalcapital.connection" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="personalcapital.connection.APIConnector">
+<em class="property">class </em><code class="descclassname">personalcapital.connection.</code><code class="descname">APIConnector</code><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Personal Capital API APIConnector</p>
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.AUTH_LEVEL_KEY">
+<code class="descname">AUTH_LEVEL_KEY</code><em class="property"> = 'authLevel'</em><a class="headerlink" href="#personalcapital.connection.APIConnector.AUTH_LEVEL_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.CSRF_KEY">
+<code class="descname">CSRF_KEY</code><em class="property"> = 'csrf'</em><a class="headerlink" href="#personalcapital.connection.APIConnector.CSRF_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.CSRF_TOKEN_REGEXP">
+<code class="descname">CSRF_TOKEN_REGEXP</code><em class="property"> = re.compile(&quot;globals.csrf='([a-f0-9-]+)'&quot;)</em><a class="headerlink" href="#personalcapital.connection.APIConnector.CSRF_TOKEN_REGEXP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.ERRORS_KEY">
+<code class="descname">ERRORS_KEY</code><em class="property"> = 'errors'</em><a class="headerlink" href="#personalcapital.connection.APIConnector.ERRORS_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.SP_HEADER_KEY">
+<code class="descname">SP_HEADER_KEY</code><em class="property"> = 'spHeader'</em><a class="headerlink" href="#personalcapital.connection.APIConnector.SP_HEADER_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.SUCCESS_KEY">
+<code class="descname">SUCCESS_KEY</code><em class="property"> = 'success'</em><a class="headerlink" href="#personalcapital.connection.APIConnector.SUCCESS_KEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.APIConnector.authenticate_password">
+<code class="descname">authenticate_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector.authenticate_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector.authenticate_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="personalcapital.connection.APIConnector.connect">
+<em class="property">classmethod </em><code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.csrf">
+<code class="descname">csrf</code><a class="headerlink" href="#personalcapital.connection.APIConnector.csrf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="personalcapital.connection.APIConnector.get_user_credentials">
+<em class="property">static </em><code class="descname">get_user_credentials</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector.get_user_credentials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector.get_user_credentials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.APIConnector.login">
+<code class="descname">login</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.APIConnector.session">
+<code class="descname">session</code><a class="headerlink" href="#personalcapital.connection.APIConnector.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.APIConnector.two_factor_authenticate">
+<code class="descname">two_factor_authenticate</code><span class="sig-paren">(</span><em>mode</em>, <em>code</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector.two_factor_authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector.two_factor_authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.APIConnector.two_factor_challenge">
+<code class="descname">two_factor_challenge</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#APIConnector.two_factor_challenge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.APIConnector.two_factor_challenge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personalcapital.connection.AuthLevelEnum">
+<em class="property">class </em><code class="descclassname">personalcapital.connection.</code><code class="descname">AuthLevelEnum</code><a class="reference internal" href="_modules/personalcapital/connection.html#AuthLevelEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.AuthLevelEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="personalcapital.connection.AuthLevelEnum.USER_REMEMBERED">
+<code class="descname">USER_REMEMBERED</code><em class="property"> = 'USER_REMEMBERED'</em><a class="headerlink" href="#personalcapital.connection.AuthLevelEnum.USER_REMEMBERED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personalcapital.connection.CookieSession">
+<em class="property">class </em><code class="descclassname">personalcapital.connection.</code><code class="descname">CookieSession</code><span class="sig-paren">(</span><em>api_endpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#CookieSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.CookieSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="personalcapital.connection.CookieSession.SESSION_FN">
+<code class="descname">SESSION_FN</code><em class="property"> = '/home/travis/virtualenv/python3.5.6/lib/python3.5/site-packages/personalcapital/session.json'</em><a class="headerlink" href="#personalcapital.connection.CookieSession.SESSION_FN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.CookieSession.api_endpoint">
+<code class="descname">api_endpoint</code><a class="headerlink" href="#personalcapital.connection.CookieSession.api_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.CookieSession.cookies">
+<code class="descname">cookies</code><a class="headerlink" href="#personalcapital.connection.CookieSession.cookies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.CookieSession.csrf">
+<code class="descname">csrf</code><a class="headerlink" href="#personalcapital.connection.CookieSession.csrf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.CookieSession.fetch">
+<code class="descname">fetch</code><span class="sig-paren">(</span><em>endpoint</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#CookieSession.fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.CookieSession.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>for getting data after logged in</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.CookieSession.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>session_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#CookieSession.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.CookieSession.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.CookieSession.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>endpoint</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#CookieSession.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.CookieSession.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="personalcapital.connection.CookieSession.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/personalcapital/connection.html#CookieSession.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.CookieSession.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.CookieSession.session">
+<code class="descname">session</code><a class="headerlink" href="#personalcapital.connection.CookieSession.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="personalcapital.connection.TwoFactorVerificationModeEnum">
+<em class="property">class </em><code class="descclassname">personalcapital.connection.</code><code class="descname">TwoFactorVerificationModeEnum</code><a class="reference internal" href="_modules/personalcapital/connection.html#TwoFactorVerificationModeEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#personalcapital.connection.TwoFactorVerificationModeEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="attribute">
+<dt id="personalcapital.connection.TwoFactorVerificationModeEnum.EMAIL">
+<code class="descname">EMAIL</code><em class="property"> = 2</em><a class="headerlink" href="#personalcapital.connection.TwoFactorVerificationModeEnum.EMAIL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="personalcapital.connection.TwoFactorVerificationModeEnum.SMS">
+<code class="descname">SMS</code><em class="property"> = 0</em><a class="headerlink" href="#personalcapital.connection.TwoFactorVerificationModeEnum.SMS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">personalcapital</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Anthony Agnone.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/personalcapital.connection.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

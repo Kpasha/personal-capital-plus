@@ -1,0 +1,7 @@
+personalcapital.database module
+===============================
+
+.. automodule:: personalcapital.database
+    :members:
+    :undoc-members:
+    :show-inheritance:

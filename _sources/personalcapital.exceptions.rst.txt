@@ -1,0 +1,7 @@
+personalcapital.exceptions module
+=================================
+
+.. automodule:: personalcapital.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:

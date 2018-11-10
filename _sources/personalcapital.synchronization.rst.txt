@@ -1,0 +1,7 @@
+personalcapital.synchronization module
+======================================
+
+.. automodule:: personalcapital.synchronization
+    :members:
+    :undoc-members:
+    :show-inheritance:

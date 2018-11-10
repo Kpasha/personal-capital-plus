@@ -1,0 +1,7 @@
+personalcapital.tools.sync\_txns module
+=======================================
+
+.. automodule:: personalcapital.tools.sync_txns
+    :members:
+    :undoc-members:
+    :show-inheritance:

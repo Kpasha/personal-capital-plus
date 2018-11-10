@@ -1,0 +1,7 @@
+personalcapital.tools.query\_all\_transactions module
+=====================================================
+
+.. automodule:: personalcapital.tools.query_all_transactions
+    :members:
+    :undoc-members:
+    :show-inheritance:

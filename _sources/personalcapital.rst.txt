@@ -12,6 +12,7 @@ Subpackages
 .. toctree::
 
     personalcapital.protocol
+    personalcapital.tools
     personalcapital.util
 
 Submodules
@@ -25,5 +26,6 @@ Submodules
    personalcapital.database
    personalcapital.exceptions
    personalcapital.query
+   personalcapital.synchronization
    personalcapital.version
 

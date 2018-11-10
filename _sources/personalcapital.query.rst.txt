@@ -1,0 +1,7 @@
+personalcapital.query module
+============================
+
+.. automodule:: personalcapital.query
+    :members:
+    :undoc-members:
+    :show-inheritance:

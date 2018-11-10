@@ -24,5 +24,6 @@ Submodules
    personalcapital.conversion
    personalcapital.database
    personalcapital.exceptions
+   personalcapital.query
    personalcapital.version
 

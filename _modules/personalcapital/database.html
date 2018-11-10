@@ -33,12 +33,17 @@
           <div class="body" role="main">
             
   <h1>Source code for personalcapital.database</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+<span></span><span class="kn">import</span> <span class="nn">structlog</span>
+
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="k">import</span> <span class="n">MongoClient</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">structlog</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="Database"><a class="viewcode-back" href="../../personalcapital.database.html#personalcapital.database.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">DB_PORT</span> <span class="o">=</span> <span class="mi">27017</span>
     <span class="n">DB_HOST</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+    <span class="n">DATE_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">DB_HOST</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">DB_PORT</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
@@ -51,6 +56,40 @@
 
     <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="most_recent_transaction"><a class="viewcode-back" href="../../personalcapital.database.html#personalcapital.database.most_recent_transaction">[docs]</a><span class="k">def</span> <span class="nf">most_recent_transaction</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">Database</span><span class="p">()</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">txns</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">banking</span><span class="o">.</span><span class="n">transactions</span>
+        <span class="n">most_recent</span> <span class="o">=</span> <span class="n">txns</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+            <span class="p">{},</span>
+            <span class="p">{</span><span class="s2">&quot;transactionDate&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&quot;transactionDate&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="n">most_recent</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="insert_transactions"><a class="viewcode-back" href="../../personalcapital.database.html#personalcapital.database.insert_transactions">[docs]</a><span class="k">def</span> <span class="nf">insert_transactions</span><span class="p">(</span><span class="n">txns</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">txns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">Database</span><span class="p">()</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s2">&quot;Inserting </span><span class="si">{}</span><span class="s2"> transactions.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">txns</span><span class="p">)))</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">banking</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">txns</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s2">&quot;Not inserting new transactions, none given.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="has_transactions"><a class="viewcode-back" href="../../personalcapital.database.html#personalcapital.database.has_transactions">[docs]</a><span class="k">def</span> <span class="nf">has_transactions</span><span class="p">(</span><span class="n">txns</span><span class="p">):</span>
+    <span class="n">txn_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">txn</span><span class="p">[</span><span class="s2">&quot;userTransactionId&quot;</span><span class="p">]:</span> <span class="n">txn</span>
+        <span class="k">for</span> <span class="n">txn</span> <span class="ow">in</span> <span class="n">txns</span>
+    <span class="p">}</span>
+    <span class="k">with</span> <span class="n">Database</span><span class="p">()</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">banking</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;userTransactionId&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;$in&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">txn_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;userTransactionId&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="s2">&quot;userTransactionId&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">txn_map</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">]</span></div>
 </pre></div>
 
           </div>

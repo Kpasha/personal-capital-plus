@@ -22,21 +22,21 @@ def report():
     print(json.dumps(report, indent=4))
 
 
-def main(action):
-    if action == 'update':
-        update_transactions()
-    elif action == 'report':
-        report()
-    else:
-        raise ValueError("Unsupported action '{}'".format(action))
-
-
 def get_clargs():
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
     parser.add_argument(dest="action", choices=['report', 'update'], help="Action to perform.")
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def main():
+
+    def _main(action):
+        if action == 'update':
+            update_transactions()
+        elif action == 'report':
+            report()
+        else:
+            raise ValueError("Unsupported action '{}'".format(action))
+
     args = get_clargs()
-    main(args.action)
+    _main(args.action)

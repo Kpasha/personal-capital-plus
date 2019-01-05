@@ -213,7 +213,7 @@ class Connector(object):
 
 class CookieSession(object):
 
-    SESSION_FN = "session.json"
+    SESSION_FN = path.join(path.expanduser("~"), ".personalcapital", "session.json")
 
     def __init__(self, api_endpoint):
         self.__session = requests.Session()

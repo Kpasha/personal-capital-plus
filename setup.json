@@ -1,0 +1,15 @@
+{
+    "package_info": {
+        "friendly_name": "personal-capital-plus",
+        "module_name": "personalcapital",
+        "description": "Skeleton python application",
+        "url": "https://github.com/aagnone3/personal-capital-plus",
+        "author": "Anthony Agnone",
+        "author_email": "anthonyagnone@gmail.com"
+    },
+    "entry_points": {
+        "console_scripts": [
+            "pc_api=personalcapital.tools.entry:main"
+        ]
+    }
+}

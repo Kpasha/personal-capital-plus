@@ -40,3 +40,6 @@ class Database(object):
 
     def get_transactions(self):
         return list(self.txns.find())
+
+    def clear_transactions(self):
+        self.txns.remove({})

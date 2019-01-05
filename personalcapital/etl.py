@@ -1,6 +1,6 @@
 import json
 import pandas as pd
-from datetime import date
+from datetime import datetime, date, timedelta
 
 from .log import logger
 from personalcapital import (
@@ -25,6 +25,41 @@ def get_transactions():
     with Database() as db:
         txns = db.get_transactions()
     return txns
+
+
+def update_transactions():
+    def _update_transactions(session):
+        now = datetime.now()
+        date_format = '%Y-%m-%d'
+        days = 365 * 2
+        start_date = (now - (timedelta(days=days+1))).strftime(date_format)
+        end_date = (now - (timedelta(days=1))).strftime(date_format)
+        txn_response = session.fetch('/transaction/getUserTransactions', {
+            'sort_cols': 'transactionTime',
+            'sort_rev': 'true',
+            'page': '0',
+            'rows_per_page': '100',
+            'startDate': start_date,
+            'endDate': end_date,
+            'component': 'DATAGRID'
+        })
+
+        # throw error if bad, parse json if good
+        if txn_response.status_code != 200:
+            raise ValueError("Fetching transactions failed with code {}.".format(txn_response.status_code))
+        txn_response = txn_response.json()
+
+        # parse the data out and return
+        transactions = txn_response['spData']
+        print('Number of transactions between {0} and {1}: {2}'.format(transactions['startDate'], transactions['endDate'],
+                                                                       len(transactions['transactions'])))
+
+        return transactions['transactions']
+
+    with Connector.connect() as session, Database() as db:
+        txns = _update_transactions(session)
+        db.clear_transactions()
+        db.add_transactions(txns)
 
 
 def get_expenses(month=None):

@@ -16,9 +16,12 @@ from personalcapital.etl import update_transactions
 
 
 def report():
+    if "PEW_PAYLOAD_URL" not in os.environ:
+        raise EnvironmentError("PEW_PAYLOAD_URL is not set.")
+
     report = get_report()
     session = Session()
-    response = session.post("http://poorman.anthonyagnone.com/set_payload", json=report)
+    response = session.post(os.environ["PEW_PAYLOAD_URL"], json=report)
     print(json.dumps(report, indent=4))
 
 

@@ -71,6 +71,14 @@ Or install using pip and GitHub:
 
   pip install -U git+https://github.com/aagnone3/personal-capital-plus.git
 
+
+Now, to avoid a 2FA prompt each run, set the following environment variables:
+
+.. code-block:: bash
+
+   export PEW_EMAIL=<your_personal_capital_email>
+   export PEW_PASSWORD=<your_personal_capital_password>
+
 Local Testing
 ~~~~~~~~~~~~~
 

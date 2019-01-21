@@ -79,6 +79,16 @@ Now, to avoid a 2FA prompt each run, set the following environment variables:
    export PEW_EMAIL=<your_personal_capital_email>
    export PEW_PASSWORD=<your_personal_capital_password>
 
+With the environment defined, give it a whirl:
+
+.. code-block:: bash
+
+   # only available if you've installed it
+   pc_api update
+
+   # otherwise, use this
+   PYTHONPATH=${PYTHONPATH:-}:${PWD} python personalcapital/tools/entry.py update
+
 Local Testing
 ~~~~~~~~~~~~~
 

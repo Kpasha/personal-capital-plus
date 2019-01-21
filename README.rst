@@ -21,6 +21,14 @@ personal-capital-plus
 
 Personal Capital + Python = Pipelined personal finance
 
+Use your existing Personal Capital login credentials to pull the JSON data directly, allowing
+you to perform any custom analyses you wish to. The API calls can be found by viewing the HTTP
+calls the browser makes after login.
+
+.. _entry.py:
+
+This library pulls the data into a Mongo database to enable local analysis. See entry.py_.
+
 Documentation
 -------------
 

@@ -44,4 +44,4 @@ pypi: build
 
 .PHONY: test
 test:
-	PYTHONPATH=${PYTHONPATH}:${PWD}/${MODULE_NAME} py.test -v --pdb
+	PYTHONPATH=${PYTHONPATH}:${PWD} py.test -v --pdb

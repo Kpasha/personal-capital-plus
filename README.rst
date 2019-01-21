@@ -1,30 +1,81 @@
-# Personal Capital
+.. -*- mode: rst -*-
 
-Python library for accessing Personal Capital data
+.. role:: bash(code)
+   :language: bash
 
-# Installation
+|Travis|_ |PyPi|_ |TestStatus|_ |PythonVersion|_
 
-## With Pip
+.. |Travis| image:: https://travis-ci.org/aagnone3/personal-capital-plus.svg?branch=master
 
-`pip install personal-capital-plus`
+.. |PyPi| image:: https://badge.fury.io/py/personal-capital-plus.svg
+.. _PyPi: https://badge.fury.io/py/personal-capital-plus
 
-## With Source Code
+.. |TestStatus| image:: https://travis-ci.org/aagnone3/personal-capital-plus.svg
+.. _TestStatus: https://travis-ci.org/aagnone3/personal-capital-plus.svg
 
-You can get the source code by cloning it from Github:
+.. |PythonVersion| image:: https://img.shields.io/pypi/pyversions/personal-capital-plus.svg
+.. _PythonVersion: https://img.shields.io/pypi/pyversions/personal-capital-plus.svg
 
-`git clone https://github.com/aagnone/personalcapital.git`
+personal-capital-plus
+================
 
-or get the tarball:
+Personal Capital + Python = Pipelined personal finance
 
-`curl -OJL https://github.com/aagnone/personalcapital/tarball/master`
+Documentation
+-------------
 
-then either include the library into your code, or install it with:
+Documentation can be found at the github pages here_
 
-`python setup.py install`
+.. _here: https://aagnone3.github.io/personal-capital-plus/
 
-# Usage
-TODO
+Dependencies
+~~~~~~~~~~~~
 
-# Personal Capital API
+personal-capital-plus is tested to work under Python 3.x.
+See the requirements via the following command:
 
-Please inspect the network requests to see what requests are possible. The `main.py` example includes two such calls.
+.. code-block:: bash
+
+  cat requirements.txt
+
+Installation
+~~~~~~~~~~~~
+
+personal-capital-plus is currently available on the PyPi's repository and you can
+install it via `pip`:
+
+.. code-block:: bash
+
+  pip install -U personal-capital-plus
+
+If you prefer, you can clone it and run the setup.py file. Use the following
+commands to get a copy from GitHub and install all dependencies:
+
+.. code-block:: bash
+
+  git clone https://github.com/aagnone3/personal-capital-plus.git
+  cd personal-capital-plus
+  pip install .
+
+Or install using pip and GitHub:
+
+.. code-block:: bash
+
+  pip install -U git+https://github.com/aagnone3/personal-capital-plus.git
+
+Local Testing
+~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+  make test
+  
+Travis Testing
+~~~~~~~~~~~~~~
+
+The :bash:`Makefile`, :bash:`.travis.yml` file and :bash:`.ci` directory contain the structure necessary to have Travis_ test the repository upon all branch updates. Some additional steps, however, are needed:
+
+- Enable the repository to be monitored by Travis via your Travis profile.
+- Generate a Github app token, and assign it to the (private) environment variable :bash:`${GITHUB_TOKEN}` in the Travis environment.
+
+.. _Travis: https://travis-ci.org/aagnone3/personal-capital-plus

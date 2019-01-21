@@ -79,6 +79,14 @@ Now, to avoid a 2FA prompt each run, set the following environment variables:
    export PEW_EMAIL=<your_personal_capital_email>
    export PEW_PASSWORD=<your_personal_capital_password>
 
+If you plan to use the `update` option of `pc_api`, set the following variable, indicating
+the URL the POST to with a derived JSON payload. The payload is currently customized for my 
+own needs, but trace entry.py_ to go about changing it for yourself.
+
+.. code-block:: bash
+
+   export PEW_PAYLOAD_URL=<destination_payload_url>
+
 With the environment defined, give it a whirl:
 
 .. code-block:: bash
